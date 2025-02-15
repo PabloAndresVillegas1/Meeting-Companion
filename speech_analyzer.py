@@ -20,11 +20,11 @@ credentials = {
 }
 
 params = {
-    GenParams.MAX_NEW_TOKENS = 700,
-    GenParams.TEMPERATURE = 0.1,
+    GenParams.MAX_NEW_TOKENS: 800,
+    GenParams.TEMPERATURE: 0.1,
 }
 
-LLAMA2_model = model(
+LLAMA2_model = Model(
     model_id='meta-llama/llama-3-2-11b-vision-instruct', 
     credentials=credentials,
     params=params,
@@ -37,10 +37,8 @@ llm = WatsonxLLM(LLAMA2_model) ###---> write your code here
 
 # This template is structured based on LLAMA2. If you are using other LLMs, feel free to remove the tags
 temp = """
-<s><<SYS>>
 List the key points with details from the context: 
 [INST] The context : {context} [/INST] 
-<</SYS>>
 """
 # here is the simplified version of the prompt template
 # temp = """
@@ -61,8 +59,8 @@ def transcript_audio(audio_file):
     
     pipe = pipeline(
         "automatic-speech-recognition",
-        model="openai/whisper-tiny.en",
-        chunk_length_s=30,
+        model = "openai/whisper-tiny.en",
+        chunk_length_s = 30,
     )
     #------> write the code here
     
@@ -79,10 +77,10 @@ audio_input = gr.Audio(sources="upload", type="filepath")
 output_text = gr.Textbox()
 
 # Create the Gradio interface with the function, inputs, and outputs
-iface = gr.Interface(fn=transcript_audio,
-                     inputs=audio_input, outputs=output_text,
-                     title="Audio Transcription App",
-                     description="Upload the audio file")
+iface = gr.Interface(fn = transcript_audio,
+                     inputs = audio_input, outputs = output_text,
+                     title = "Audio Transcription App",
+                     description = "Upload the audio file")
 #---> write code here
 
 iface.launch(server_name="0.0.0.0", server_port=7860)
